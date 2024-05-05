@@ -4,12 +4,14 @@ import Form from "../form";
 import { useRouter } from "next/navigation";
 import apiClient from "../src/lib/apiClient";
 import Link from "next/link";
+import { useAuth } from "@/context/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleClick = async (e: any) => {
     e.preventDefault();
@@ -20,7 +22,9 @@ const Login = () => {
         password,
       });
       const token = response.data.token;
-      console.log(token);
+
+      login(token);
+
       router.push("/diaries");
     } catch (err) {
       alert("入力内容が正しくありません。");
