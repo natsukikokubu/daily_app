@@ -1,6 +1,6 @@
 import apiClient from "@/lib/apiClient";
 import React, { useState } from "react";
-import { PostType } from "@/types";
+import Link from "next/link";
 
 const Diary = () => {
   const [postText, setPostText] = useState<string>("");
@@ -22,15 +22,14 @@ const Diary = () => {
 
   return (
     <div>
-      <h1 className="text-center text-gray-700 text-4xl mt-16">
-        ○月○日 今日の日記
-      </h1>
+      <h1 className="text-center text-gray-700 text-4xl mt-16">今日の日記</h1>
       <form onSubmit={handleSubmit} className="text-center mx-20 mt-10">
         <textarea
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setPostText(e.target.value)
           }
           value={postText}
+          className="flex flex-col px-20 py-40 w-full rounded-lg border border-blue-500"
         ></textarea>
         <button
           type="submit"
@@ -38,6 +37,11 @@ const Diary = () => {
         >
           保存する
         </button>
+        <Link href={"/diaries"}>
+          <button className="absolute bottom-40 left-40 px-4 py-4 rounded-2xl text-white bg-blue-500 hover:bg-blue-600 border  border-spacing-2 border-blue-500">
+            日記一覧へ
+          </button>
+        </Link>
       </form>
     </div>
   );

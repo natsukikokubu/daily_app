@@ -34,24 +34,15 @@ router.post("/post", async (req, res) => {
 
 //最新投稿用API
 router.get("", async (req, res) => {
-  console.log("na");
-
-  const MOCK = [
-    {
-      id: 123,
-      content: "hogehoge",
-      createdAt: new Date().toISOString(),
-      authorId: 29,
-    },
-    {
-      id: 124,
-      content: "fugafuga",
-      createdAt: new Date().toISOString(),
-      authorId: 29,
-    },
-  ];
-
-  return res.json({ diaries: MOCK });
+  try {
+    const diaries = await prisma.post.findMany({});
+    res.status(200).json({ diaries });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "サーバーエラーです。" });
+  } finally {
+    await prisma.$disconnect();
+  }
 });
 
 module.exports = router;
